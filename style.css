@@ -17,6 +17,7 @@
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
   
   header {
@@ -25,8 +26,9 @@
     padding: 10px 20px;
     position: sticky;
     top: 0;
-    background: var(--bg-color);
+    background: none;
     z-index: 100;
+    transition: background-color 0.5s ease;
   }
   
   .switch {
@@ -67,7 +69,7 @@
   }
   
   .switch input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #888;
   }
   
   .switch input:checked + .slider:before {
@@ -83,7 +85,11 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     z-index: 1000;
-    width: 300px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.5s ease;
   }
   
   body.dark-mode .now-playing {
@@ -91,21 +97,38 @@
   }
   
   .album-cover img {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    margin-right: 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .song-info {
+    text-align: center;
   }
   
   .song-info h2 {
-    margin: 0 0 10px 0;
-    font-size: 1.1em;
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .song-info .artist {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 4px;
+  }
+  
+  body.dark-mode .song-info .artist {
+    color: #bbb;
   }
   
   .controls {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    margin: 10px 0;
   }
   
   .controls button {

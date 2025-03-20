@@ -62,4 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
     poemLines.forEach(line => {
       observer.observe(line);
     });
+  
+    audio.play().catch(error => {
+      console.log("Autoplay failed: ", error);
+    });
   });  
