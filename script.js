@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const themeToggle = document.getElementById("theme-toggle");
-    themeToggle.addEventListener("click", () => {
+    themeToggle.addEventListener("change", () => {
       document.body.classList.toggle("dark-mode");
     });
   
@@ -11,20 +11,41 @@ document.addEventListener("DOMContentLoaded", function() {
     playPauseBtn.addEventListener("click", () => {
       if (audio.paused) {
         audio.play();
-        playPauseBtn.textContent = "Pause";
+        playPauseBtn.innerHTML = "&#10074;&#10074;";
       } else {
         audio.pause();
-        playPauseBtn.textContent = "Play";
+        playPauseBtn.innerHTML = "&#9654;";
       }
     });
   
     audio.addEventListener("timeupdate", () => {
-      const percentage = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = percentage + "%";
+      if (audio.duration) {
+        const percentage = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = percentage + "%";
+      }
+    });
+  
+    const volumeControl = document.getElementById("volume");
+    volumeControl.addEventListener("input", () => {
+      audio.volume = volumeControl.value;
     });
   
     const poemParagraphs = document.querySelectorAll(".poem p");
+    poemParagraphs.forEach(p => {
+      const lines = p.innerHTML.split("<br>");
+      p.innerHTML = "";
+      lines.forEach((line, index) => {
+        const span = document.createElement("span");
+        span.className = "line";
+        span.innerHTML = line;
+        p.appendChild(span);
+        if (index < lines.length - 1) {
+          p.appendChild(document.createElement("br"));
+        }
+      });
+    });
   
+    const poemLines = document.querySelectorAll(".poem .line");
     const observerOptions = {
       threshold: 0.1
     };
@@ -38,8 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }, observerOptions);
   
-    poemParagraphs.forEach(p => {
-      observer.observe(p);
+    poemLines.forEach(line => {
+      observer.observe(line);
     });
-  });
-  
+  });  
